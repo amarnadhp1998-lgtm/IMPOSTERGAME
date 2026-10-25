@@ -44,3 +44,7 @@ GitHub Actions is for finite jobs and stops GitHub-hosted jobs after at most six
 3. Deploy the service, then check its logs for `Imposter bot is running`.
 
 Railway's Hobby plan currently has a $5/month minimum usage commitment. GitHub pushes to the connected branch trigger redeploys. Game sessions are in memory, so active games reset when the host restarts or deploys a new version; the local JSON scoreboard is not durable unless a persistent volume is configured.
+
+## Temporary test with GitHub Actions
+
+The `Temporary Telegram bot test` workflow starts only when manually dispatched and stops after six hours. Add the new token as a repository Actions secret named `BOT_TOKEN` under **Settings → Secrets and variables → Actions**. Then open **Actions**, select the workflow, choose **Run workflow**, and start it from `master`. Cancel the workflow run to stop the bot earlier. The workflow creates its runtime config from the token-free example; it does not read or publish the local `config.py`.
