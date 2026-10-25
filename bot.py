@@ -21,7 +21,7 @@ try:
     from config import SCORES_FILE
 except ImportError:
     SCORES_FILE = Path("scores.json")
-from game import initialize_game, choose_first_player
+from game import initialize_game, choose_first_player, shuffle_clue_order
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -253,11 +253,11 @@ async def clue_finished(context):
     data = game["data"]
     data["clue_index"] += 1
     if data["clue_index"] >= len(data["clue_order"]):
-        data["clue_index"] = 0
         data["round"] += 1
         if data["round"] > data["clue_rounds"]:
             await schedule_discussion(context, chat_id)
             return
+        shuffle_clue_order(data)
     await prompt_clue(context, chat_id)
 
 

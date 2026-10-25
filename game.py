@@ -43,10 +43,8 @@ def initialize_game(players_dict):
         }
         for player_id in player_ids
     }
-    crew = [player_id for player_id in player_ids if player_id not in imposters]
-    order = crew[:]
+    order = player_ids[:]
     rng.shuffle(order)
-    order.extend(player_id for player_id in player_ids if player_id in imposters)
     return {
         "category": category,
         "secret_word": word,
@@ -59,6 +57,11 @@ def initialize_game(players_dict):
         "guessed": set(),
     }
 
+
+def shuffle_clue_order(game_data):
+    """Randomize speaking order for the next clue round."""
+    rng.shuffle(game_data["clue_order"])
+    game_data["clue_index"] = 0
 
 def choose_first_player(game_data):
     return game_data["clue_order"][0]
